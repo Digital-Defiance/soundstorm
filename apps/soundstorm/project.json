@@ -15,7 +15,7 @@
         "bundle": false,
         "main": "apps/soundstorm/src/main.ts",
         "tsConfig": "apps/soundstorm/tsconfig.app.json",
-        "assets": ["apps/soundstorm/src/assets"],
+        "assets": ["apps/soundstorm/src/assets", "apps/soundstorm/.env"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
