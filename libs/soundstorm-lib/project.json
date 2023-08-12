@@ -1,0 +1,29 @@
+{
+  "name": "soundstorm-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/soundstorm-lib/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/soundstorm-lib",
+        "main": "libs/soundstorm-lib/src/index.ts",
+        "tsConfig": "libs/soundstorm-lib/tsconfig.lib.json",
+        "assets": ["libs/soundstorm-lib/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/soundstorm-lib/**/*.ts",
+          "libs/soundstorm-lib/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
