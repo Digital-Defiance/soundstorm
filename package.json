@@ -2,9 +2,13 @@
   "name": "@soundstorm/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "npx nx build soundstorm-react && npx nx build soundstorm",
+    "serve": "npx nx build soundstorm-react && npx nx serve soundstorm"
+  },
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.0",
     "@auth0/auth0-spa-js": "^2.1.1",
     "@swc/helpers": "~0.5.0",
     "auth0": "^3.6.0",

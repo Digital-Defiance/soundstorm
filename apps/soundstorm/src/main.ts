@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { join } from 'path';
 import authRouter from './routers/auth';
 import { connectDb, loadModels } from './mongoose';
 
@@ -11,6 +12,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth', authRouter);
+
+const reactAppPath = join(__dirname, '../../../../soundstorm-react');
+
+app.use(express.static(reactAppPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(join(reactAppPath, 'index.html'));
+});
+
 
 connectDb().then(() => {
   loadModels();
