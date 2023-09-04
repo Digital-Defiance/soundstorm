@@ -3,6 +3,9 @@
 # env files
 .env
 
+# local certificates
+**/localdev/cert.*
+
 # compiled output
 dist
 tmp

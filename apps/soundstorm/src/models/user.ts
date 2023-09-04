@@ -14,7 +14,7 @@ export const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-  }
+  },
 });
 
 export const User: Model<IUser> = model<IUser>(UserModelName, userSchema);

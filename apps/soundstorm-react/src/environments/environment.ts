@@ -5,8 +5,9 @@ import { IEnvironment } from '../interfaces/environment';
 export const environment: IEnvironment = {
   production: false,
   auth0: {
-    domain: 'soundstorm.us.auth0.com',
-    clientId: 'Uqdpn7d9832jQWzaUk9hgY7UAhM7uEaE',
-    audience: 'https://soundstorm.us.auth0.com/api/v2/'
-  }
+    domain: 'soundstorm-dev.us.auth0.com',
+    clientId: 'uGptYZUCnWuxXGH5dN8wiq7OYGkxDgwC',
+    audience: 'https://soundstorm-dev.us.auth0.com/api/v2/',
+    callbackUrl: 'http://localhost:3000/callback',
+  },
 };

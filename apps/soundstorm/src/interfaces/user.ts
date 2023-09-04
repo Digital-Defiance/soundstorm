@@ -1,4 +1,4 @@
 export interface IUser {
-    email: string;
-    auth0Id: string;
+  email: string;
+  auth0Id: string;
 }

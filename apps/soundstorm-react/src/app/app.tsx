@@ -1,11 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
 
-import Login from '../components/login';
-
 import { Route, Routes, Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { AuthenticationGuard } from '../components/authentication-required';
+import AccountError from '../pages/account-error';
+import ApiAccess from '../components/api-access';
+import Callback from '../components/callback';
+import LoginLink from '../components/login-link';
+import LogoutLink from '../components/logout-link';
+import UserProfile from '../pages/user-profile';
 
 export function App() {
+  const { isAuthenticated } = useAuth0();
   return (
     <div>
       <div role="navigation">
@@ -13,9 +20,21 @@ export function App() {
           <li>
             <Link to="/">Home</Link>
           </li>
+          {!isAuthenticated && (
           <li>
-            <Link to="/page-2">Page 2</Link>
+            <LoginLink />
           </li>
+        )}
+        {isAuthenticated && (
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+        )}
+        {isAuthenticated && (
+          <li>
+            <LogoutLink />
+          </li>
+        )}
         </ul>
       </div>
       <Routes>
@@ -28,20 +47,24 @@ export function App() {
             </div>
           }
         />
+        <Route path="/callback" element={<Callback />} />
         <Route
-          path="/login"
-          element={
-            <Login />
-          }
-          />
-        <Route
-          path="/page-2"
+          path="/profile"
           element={
             <div>
-              <Link to="/">Click here to go back to root page.</Link>
+              <AuthenticationGuard component={UserProfile} />
             </div>
           }
         />
+        <Route
+          path="/api-access"
+          element={
+            <div>
+              <AuthenticationGuard component={ApiAccess} />
+            </div>
+          }
+        />
+        <Route path="/account-error" element={<AccountError />} />
       </Routes>
     </div>
   );
