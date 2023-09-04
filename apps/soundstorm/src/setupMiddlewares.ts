@@ -32,8 +32,9 @@ export function setupMiddlewares(app: Application) {
           defaultSrc: ["'self'"],
           imgSrc: ["'self'", 'https://cdn.auth0.com', 'https://s.gravatar.com'],
           connectSrc: ["'self'", `https://${environment.auth0.domain}/`],
-          scriptSrc: ["'self'", "'unsafe-inline'"], // Add other sources if needed
-          styleSrc: ["'self'", "'unsafe-inline'"], // Add other sources if needed
+          scriptSrc: ["'self'", "'unsafe-inline'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          frameSrc: ["'self'", `https://${environment.auth0.domain}/`],
         },
       },
       frameguard: {
