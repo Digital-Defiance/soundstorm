@@ -22,7 +22,7 @@ export const UserSoundSchema = new Schema<IUserSound>({
   },
   author: {
     type: String,
-    required: true,
+    required: false,
   },
   comment: {
     type: String,
@@ -30,7 +30,7 @@ export const UserSoundSchema = new Schema<IUserSound>({
   },
   vendor: {
     type: String,
-    required: true,
+    required: false,
   },
   color: {
     type: Number,
@@ -54,11 +54,11 @@ export const UserSoundSchema = new Schema<IUserSound>({
   },
   bcvendor: {
     type: String,
-    required: true,
+    required: false,
   },
   entry1: {
     type: String,
-    required: true,
+    required: false,
   },
   entry2: {
     type: String,
@@ -70,11 +70,11 @@ export const UserSoundSchema = new Schema<IUserSound>({
   },
   mode_name: {
     type: String,
-    required: true,
+    required: false,
   },
   category: {
     type: String,
-    required: true,
+    required: false,
   },
   subcategory: {
     type: String,

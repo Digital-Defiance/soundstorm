@@ -6,11 +6,11 @@ import {
   IUserSound,
   ModelName,
 } from '@soundstorm/soundstorm-lib';
-import { UpdateWriteOpResult } from 'mongoose';
+import { BulkWriteResult } from 'mongodb';
 
 const UserSoundModel = BaseModel.getModel<IUserSound>(ModelName.UserSound);
 
-function rowToInterface(row: any, user: IUser): IUserSound {
+function rowToInterface(row: IUserSound, user: IUser): IUserSound {
   const date = new Date();
   // for each of the fields in the row, we need to map it to the interface, but some of the fields are null and in mongo we want to drop those fields
   const userSound: IUserSound = {
@@ -18,20 +18,20 @@ function rowToInterface(row: any, user: IUser): IUserSound {
     favorite_id: row.favorite_id,
     version: row.version,
     name: row.name,
-    author: row.author,
-    comment: row.comment,
-    vendor: row.vendor,
+    ...(row.author && { author: row.author }),
+    ...(row.comment && { comment: row.comment }),
+    ...(row.vendor && { vendor: row.vendor }),
     color: row.color,
     tempo: row.tempo,
     alias: row.alias,
     product_id: row.product_id,
     product_version: row.product_version,
-    bcvendor: row.bcvendor,
-    entry1: row.entry1,
+    ...(row.bcvendor && { bcvendor: row.bcvendor }),
+    ...(row.entry1 && { entry1: row.entry1 }),
     ...(row.entry2 && { entry2: row.entry2 }),
     ...(row.entry3 && { entry3: row.entry3 }),
-    mode_name: row.mode_name,
-    category: row.category,
+    ...(row.mode_name && { mode_name: row.mode_name }),
+    ...(row.category && { category: row.category }),
     ...(row.subcategory && { subcategory: row.subcategory }),
     ...(row.subsubcategory && { subsubcategory: row.subsubcategory }),
     updatedAt: date,
@@ -43,7 +43,7 @@ function rowToInterface(row: any, user: IUser): IUserSound {
 export async function kompleteSqliteToMongo(
   sqlitePath: string,
   user: IUser,
-): Promise<UpdateWriteOpResult[]> {
+): Promise<BulkWriteResult> {
   const db: Database = new sqlite3(sqlitePath);
 
   try {
@@ -75,25 +75,25 @@ export async function kompleteSqliteToMongo(
     LEFT JOIN k_mode ON k_sound_info_mode.mode_id = k_mode.id
     LEFT JOIN k_sound_info_category ON k_sound_info.id = k_sound_info_category.sound_info_id
     LEFT JOIN k_category ON k_sound_info_category.category_id = k_category.id;`;
-    const master = db.prepare(masterQuery).all() as object[];
-    const upsertPromises: Promise<any>[] = [];
-    // now we need to add updated_by and created_by to all the rows, assuming an upsert
-    master.forEach((row: any) => {
-      const rowInterface: IUserSound = rowToInterface(row, user);
+    const master = db.prepare(masterQuery).all() as IUserSound[];
 
-      // Perform upsert
-      const upsertPromise = UserSoundModel.updateOne(
-        { user_id: user._id, favorite_id: row.favorite_id },
-        rowInterface,
-        { upsert: true },
-      ).exec();
-      upsertPromises.push(upsertPromise);
+    const bulkOps = master.map((row) => {
+      const rowInterface: IUserSound = rowToInterface(row, user);
+      return {
+        updateOne: {
+          filter: { user_id: user._id, favorite_id: row.favorite_id },
+          update: rowInterface,
+          upsert: true,
+        },
+      };
     });
-    return await Promise.all(upsertPromises);
+
+    return await UserSoundModel.bulkWrite(bulkOps);
   } catch (err) {
     console.error('Error reading SQLite database:', err);
+    // reject the promise if we get here
+    return Promise.reject('Error reading SQLite database');
   } finally {
     db.close();
   }
-  return [];
 }

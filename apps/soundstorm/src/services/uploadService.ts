@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { diskStorage } from 'multer';
-import { existsSync, copyFileSync, renameSync, mkdirSync } from 'fs';
+import { existsSync, copyFileSync, renameSync, mkdirSync, rmSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
 import multer from 'multer';
 import { kompleteSqliteToMongo } from './sqliteMongoService';
 import { environment } from '../environment';
 import { IUser, IUserSound } from '@soundstorm/soundstorm-lib';
-import { UpdateWriteOpResult } from 'mongoose';
+import { BulkWriteResult } from 'mongodb';
 
 export const storage = diskStorage({
   destination: (req, file, cb) => {
@@ -30,7 +30,7 @@ export async function processFile(
   file: Express.Multer.File,
   req: Request,
   res: Response,
-): Promise<UpdateWriteOpResult[] | undefined> {
+): Promise<BulkWriteResult | undefined> {
   console.log(`Uploaded file: ${file.originalname} (${file.size} bytes)`);
   console.log(`  mimetype: ${file.mimetype}`);
 
@@ -56,16 +56,14 @@ export async function processFile(
 
   const userFilename = join(environment.developer.uploadDir, `${user._id}.db3`);
   const result = await kompleteSqliteToMongo(file.path, user);
-  if (result && result.length > 0) {
-    // keep only the latest table, copy over existing file with user id
+  if (result && result.modifiedCount > 0) {
+    // keep only the latest table
     if (existsSync(userFilename)) {
-      console.log(`copying over old file ${userFilename}`);
-      copyFileSync(file.path, userFilename);
-      // rename the file to the user id
-    } else {
-      console.log(`renaming ${file.path} to ${userFilename}`);
-      renameSync(file.path, userFilename);
+      console.log(`removing old file ${userFilename}`);
+      rmSync(userFilename);
     }
+    console.log(`renaming ${file.path} to ${userFilename}`);
+    renameSync(file.path, userFilename);
     console.log('returning', result);
     return result;
   }
