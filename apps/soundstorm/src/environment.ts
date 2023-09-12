@@ -34,6 +34,7 @@ export const environment: IEnvironment = {
   siteUrl: process.env.SITE_URL ?? getSiteUrl(),
   developer: {
     reactDir: reactDir,
+    uploadDir: process.env.UPLOAD_DIR ?? relativeToDist('..', 'uploads'),
     host: host,
     port: port,
     sslEnabled: sslEnabled,

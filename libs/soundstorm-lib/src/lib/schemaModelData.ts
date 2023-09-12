@@ -2,6 +2,7 @@ import { ModelName } from './enumerations/modelName';
 import { ModelNameCollection } from './enumerations/modelNameCollection';
 import { UserSchema } from './schemas/user';
 import { ISchemaModelData } from './interfaces/schemaModelData';
+import { UserSoundSchema } from './schemas/userSound';
 
 function modelNameCollectionToPath(
   modelNameCollection: ModelNameCollection,
@@ -20,5 +21,12 @@ export const ModelData: ISchemaModelData = {
     collection: ModelNameCollection.User,
     schema: UserSchema,
     path: modelNameCollectionToPath(ModelNameCollection.User),
+  },
+  UserSound: {
+    name: ModelName.UserSound,
+    description: 'A sound that a user has saved from their komplete db.',
+    collection: ModelNameCollection.UserSound,
+    schema: UserSoundSchema,
+    path: modelNameCollectionToPath(ModelNameCollection.UserSound),
   },
 };

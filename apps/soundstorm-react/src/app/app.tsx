@@ -21,20 +21,20 @@ export function App() {
             <Link to="/">Home</Link>
           </li>
           {!isAuthenticated && (
-          <li>
-            <LoginLink />
-          </li>
-        )}
-        {isAuthenticated && (
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-        )}
-        {isAuthenticated && (
-          <li>
-            <LogoutLink />
-          </li>
-        )}
+            <li>
+              <LoginLink />
+            </li>
+          )}
+          {isAuthenticated && (
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+          )}
+          {isAuthenticated && (
+            <li>
+              <LogoutLink />
+            </li>
+          )}
         </ul>
       </div>
       <Routes>

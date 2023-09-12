@@ -3,6 +3,7 @@ export interface IEnvironment {
   siteUrl: string;
   developer: {
     reactDir: string;
+    uploadDir: string;
     host: string;
     port: number;
     sslEnabled: boolean;

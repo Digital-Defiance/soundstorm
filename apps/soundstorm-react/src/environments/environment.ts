@@ -7,7 +7,7 @@ export const environment: IEnvironment = {
   auth0: {
     domain: 'soundstorm-dev.us.auth0.com',
     clientId: 'uGptYZUCnWuxXGH5dN8wiq7OYGkxDgwC',
-    audience: 'https://soundstorm-dev.us.auth0.com/api/v2/',
+    audience: 'http://localhost:3000/',
     callbackUrl: 'http://localhost:3000/callback',
   },
 };
