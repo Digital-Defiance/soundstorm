@@ -43,6 +43,7 @@ function rowToInterface(row: IUserSound, user: IUser): IUserSound {
 export async function kompleteSqliteToMongo(
   sqlitePath: string,
   user: IUser,
+  clear = false,
 ): Promise<BulkWriteResult> {
   const db: Database = new sqlite3(sqlitePath);
 
@@ -88,6 +89,9 @@ export async function kompleteSqliteToMongo(
       };
     });
 
+    if (clear) {
+      await UserSoundModel.deleteMany({ user_id: user._id });
+    }
     return await UserSoundModel.bulkWrite(bulkOps);
   } catch (err) {
     console.error('Error reading SQLite database:', err);

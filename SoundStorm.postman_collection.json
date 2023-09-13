@@ -142,6 +142,11 @@
 							"key": "file",
 							"type": "file",
 							"src": "/C:/Users/JessicaMulein/source/repos/soundstorm-nx/komplete.db3"
+						},
+						{
+							"key": "clear",
+							"value": "true",
+							"type": "text"
 						}
 					]
 				},

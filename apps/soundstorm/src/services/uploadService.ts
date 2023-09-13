@@ -26,10 +26,11 @@ export const storage = diskStorage({
 export const upload = multer({ storage });
 
 export async function processFile(
-  user: IUser,
-  file: Express.Multer.File,
   req: Request,
   res: Response,
+  user: IUser,
+  file: Express.Multer.File,
+  clear = false,
 ): Promise<BulkWriteResult | undefined> {
   console.log(`Uploaded file: ${file.originalname} (${file.size} bytes)`);
   console.log(`  mimetype: ${file.mimetype}`);
@@ -55,7 +56,7 @@ export async function processFile(
   }
 
   const userFilename = join(environment.developer.uploadDir, `${user._id}.db3`);
-  const result = await kompleteSqliteToMongo(file.path, user);
+  const result = await kompleteSqliteToMongo(file.path, user, clear);
   if (result && result.modifiedCount > 0) {
     // keep only the latest table
     if (existsSync(userFilename)) {
@@ -64,7 +65,6 @@ export async function processFile(
     }
     console.log(`renaming ${file.path} to ${userFilename}`);
     renameSync(file.path, userFilename);
-    console.log('returning', result);
     return result;
   }
   return undefined;
