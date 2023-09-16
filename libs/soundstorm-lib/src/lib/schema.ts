@@ -8,9 +8,12 @@ import { ISchemaModels } from './interfaces/schemaModels';
 import { ModelData } from './schemaModelData';
 import { IUserSound } from './interfaces/userSound';
 import { IUserFavorite } from './interfaces/userFavorite';
+import { IUserConcept } from './interfaces/userConcept';
 
 export const SchemaModels: ISchemaModels = {
   User: BaseModel.create<IUser>(ModelData[ModelName.User]).Model,
+  UserConcept: BaseModel.create<IUserConcept>(ModelData[ModelName.UserConcept])
+    .Model,
   UserFavorite: BaseModel.create<IUserFavorite>(
     ModelData[ModelName.UserFavorite],
   ).Model,
