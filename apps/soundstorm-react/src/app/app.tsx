@@ -1,3 +1,4 @@
+import { HelmetProvider } from 'react-helmet-async';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
 
@@ -7,13 +8,15 @@ import ColorModeProvider from '../components/ColorModeProvider';
 
 export function App() {
   return (
-    <div style={{ height: '100vh' }}>
+    <HelmetProvider>
       <ColorModeProvider>
-        <Layout>
-          <AppRoutes />
-        </Layout>
+        <div style={{ height: '100vh' }}>
+          <Layout>
+            <AppRoutes />
+          </Layout>
+        </div>
       </ColorModeProvider>
-    </div>
+    </HelmetProvider>
   );
 }
 

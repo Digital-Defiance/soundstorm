@@ -227,10 +227,8 @@ const Header: React.FC<HeaderProps> = ({ onSidebarOpen }) => {
               </MenuItem>
             </Box>
             <Box sx={{ p: 2 }}>
-              <Button color="primary" fullWidth variant="outlined" href="#">
-                {isAuthenticated && <LogoutButton />}
-                {!isAuthenticated && <LoginButton />}
-              </Button>
+              {isAuthenticated && <LogoutButton />}
+              {!isAuthenticated && <LoginButton />}
             </Box>
           </Popover>
         </Box>

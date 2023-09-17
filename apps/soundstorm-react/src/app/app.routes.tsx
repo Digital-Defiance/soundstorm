@@ -6,6 +6,7 @@ import Callback from '../components/Callback';
 import Splash from '../components/Splash';
 import Upload from '../components/Upload';
 import UserProfile from '../pages/user-profile';
+import Dashboard from '../pages/Dashboard';
 
 export function AppRoutes() {
   return (
@@ -30,6 +31,7 @@ export function AppRoutes() {
       />
       <Route path="/account-error" element={<AccountError />} />
       <Route path="/upload" element={<Upload />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
