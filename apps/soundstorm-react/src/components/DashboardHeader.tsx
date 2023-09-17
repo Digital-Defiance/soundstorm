@@ -20,7 +20,7 @@ const DashboardHeader = () => {
     >
       <Grid item>
         <Typography color={theme.palette.text.primary} variant="h2">
-          Overview
+          Search
         </Typography>
         <Box sx={{ pt: 2 }}>
           <Typography color={theme.palette.text.secondary} variant="h5">

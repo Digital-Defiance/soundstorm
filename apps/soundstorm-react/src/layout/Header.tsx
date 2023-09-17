@@ -28,12 +28,8 @@ import ColorModeContext from '../components/ColorModeContext';
 import CustomButton from '../components/CustomButton';
 import { useAuth0 } from '@auth0/auth0-react';
 
-// Font Awesome Icon
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import LogoutButton from '../components/LogoutButton';
 import LoginButton from '../components/LoginButton';
-library.add(faCoins);
 
 type HeaderProps = {
   onSidebarOpen: () => void;

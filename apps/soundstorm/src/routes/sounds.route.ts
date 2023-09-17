@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { Schema } from 'mongoose';
 import { validateAccessToken } from '../middlewares/auth0';
 import { JwtService } from '../services/jwtService';
 import { processFile, upload } from '../services/uploadService';
@@ -49,6 +50,16 @@ userSoundsRouter.post(
   },
 );
 
+const getValidKeys = (schemaObj: Record<string, any>): string[] => {
+  const excludeKeys = ['deletedAt', 'deletedBy', 'updatedAt', 'createdAt'];
+  return Object.keys(schemaObj).filter((key) => !excludeKeys.includes(key));
+};
+
+type MatchStage = {
+  user_id: Schema.Types.ObjectId;
+  $or?: Record<string, any>[];
+};
+
 userSoundsRouter.get(
   '/',
   validateAccessToken,
@@ -61,20 +72,23 @@ userSoundsRouter.get(
           // Extract query parameters
           const { limit, skip, favoritesOnly, ...queryParams } = req.query;
 
-          // Validate and sanitize the query parameters
-          const validKeys = Object.keys(UserSoundSchema.obj);
-          const matchStage = {
+          // Get valid keys using the function
+          const validKeys = getValidKeys(UserSoundSchema.obj);
+          const orConditions = [];
+          for (const key of validKeys) {
+            if (queryParams[key]) {
+              const condition = {};
+              condition[key] = queryParams[key];
+              orConditions.push(condition);
+            }
+          }
+
+          const matchStage: MatchStage = {
             user_id: user._id,
           };
-          for (const key of validKeys) {
-            if (
-              queryParams[key] &&
-              !['deletedAt', 'deletedBy', 'updatedAt', 'createdAt'].includes(
-                key,
-              )
-            ) {
-              matchStage[key] = queryParams[key];
-            }
+
+          if (orConditions.length > 0) {
+            matchStage.$or = orConditions;
           }
 
           // Define fields to return
@@ -108,10 +122,7 @@ userSoundsRouter.get(
               },
             },
             {
-              $project: {
-                ...selectFields,
-                userFavorite: 0, // Exclude the userFavorite field from the final output
-              },
+              $project: selectFields,
             },
             {
               $limit: Number(limit) || 10,

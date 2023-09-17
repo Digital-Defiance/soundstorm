@@ -51,19 +51,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
               <Avatar
                 variant="rounded"
                 sx={{
-                  backgroundColor: deepPurple[600],
+                  backgroundColor:
+                    theme.palette.mode === 'dark' ? 'black' : 'white',
                   height: 52,
                   width: 52,
                   marginRight: '15px',
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faCoins}
-                  style={{
-                    color: theme.palette.common.white,
-                    height: 30,
-                    width: 30,
-                  }}
+                <img
+                  src="/assets/images/transparent-logo.png"
+                  alt="logo"
+                  height="52px"
+                  width="52px"
                 />
               </Avatar>
               <Typography
@@ -74,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
                 flexGrow={1}
                 style={{ textDecoration: 'none' }} // Use inline styles
               >
-                Crypto Dashboard
+                SoundStorm
               </Typography>
             </IconButton>
           </Link>
