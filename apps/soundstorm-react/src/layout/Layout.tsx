@@ -55,6 +55,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       id="page-top"
       sx={{
         backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.secondary,
         height: '100%',
         paddingTop: '60px',
       }}

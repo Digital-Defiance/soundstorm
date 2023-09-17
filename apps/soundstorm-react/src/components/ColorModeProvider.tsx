@@ -12,6 +12,11 @@ const ColorModeProvider: React.FC<ColorModeProviderProps> = ({ children }) => {
   const theme = createTheme({
     palette: {
       mode: mode,
+      ...(mode === 'dark' && {
+        text: {
+          primary: '#ffffff',
+        },
+      }),
     },
   });
 

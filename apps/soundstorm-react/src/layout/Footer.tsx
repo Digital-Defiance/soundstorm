@@ -76,33 +76,8 @@ const Footer = () => {
                       variant="body2"
                       color={theme.palette.text.secondary}
                     >
-                      Copyright &copy; {new Date().getFullYear()} Bob's
-                      Programming Academy.
-                    </Typography>
-                  }
-                />
-              </ListItemButton>
-            </List>
-          </Grid>
-          <Grid container item xs={12} md={4} justifyContent="center">
-            <List>
-              <ListItemButton>
-                <ListItemText
-                  primary={
-                    <Typography
-                      variant="body2"
-                      color={theme.palette.text.secondary}
-                    >
-                      Data provided by{' '}
-                      <Link
-                        href="https://www.coingecko.com/"
-                        target="_blank"
-                        rel="noreferrer"
-                        color={theme.palette.text.secondary}
-                      >
-                        CoinGecko
-                      </Link>
-                      .
+                      Copyright &copy; {new Date().getFullYear()} Digital
+                      Defiance Contributors
                     </Typography>
                   }
                 />

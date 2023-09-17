@@ -101,6 +101,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
           )}
           {isAuthenticated && (
             <Box paddingY={1}>
+              <Link to="/upload">Upload</Link>
+            </Box>
+          )}
+          {isAuthenticated && (
+            <Box paddingY={1}>
               <LogoutLink />
             </Box>
           )}

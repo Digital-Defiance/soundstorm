@@ -24,7 +24,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import UserIcon from '@mui/icons-material/Person';
 import { alpha, useTheme } from '@mui/material/styles';
-import { deepPurple } from '@mui/material/colors';
 import ColorModeContext from '../components/ColorModeContext';
 import CustomButton from '../components/CustomButton';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -32,7 +31,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 // Font Awesome Icon
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LogoutButton from '../components/LogoutButton';
 import LoginButton from '../components/LoginButton';
 library.add(faCoins);
@@ -90,19 +88,18 @@ const Header: React.FC<HeaderProps> = ({ onSidebarOpen }) => {
               <Avatar
                 variant="rounded"
                 sx={{
-                  backgroundColor: deepPurple[600],
+                  backgroundColor:
+                    theme.palette.mode === 'dark' ? 'black' : 'white',
                   height: 52,
                   width: 52,
                   marginRight: '15px',
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faCoins}
-                  style={{
-                    color: '#fff',
-                    height: 30,
-                    width: 30,
-                  }}
+                <img
+                  src="/assets/images/transparent-logo.png"
+                  alt="logo"
+                  height="52px"
+                  width="52px"
                 />
               </Avatar>
               <Typography

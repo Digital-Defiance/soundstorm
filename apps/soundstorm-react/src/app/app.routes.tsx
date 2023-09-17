@@ -4,6 +4,7 @@ import AccountError from '../pages/account-error';
 import ApiAccess from '../components/ApiAccess';
 import Callback from '../components/Callback';
 import Splash from '../components/Splash';
+import Upload from '../components/Upload';
 import UserProfile from '../pages/user-profile';
 
 export function AppRoutes() {
@@ -28,6 +29,7 @@ export function AppRoutes() {
         }
       />
       <Route path="/account-error" element={<AccountError />} />
+      <Route path="/upload" element={<Upload />} />
     </Routes>
   );
 }

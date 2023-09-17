@@ -6,9 +6,9 @@ import { IHasDeleter } from './hasDeleter';
 
 export interface IUserSound
   extends IHasID,
-  IHasTimestamps,
-  IHasSoftDelete,
-  IHasDeleter {
+    IHasTimestamps,
+    IHasSoftDelete,
+    IHasDeleter {
   user_id: Schema.Types.ObjectId;
   favorite_id: string;
   version: number;
